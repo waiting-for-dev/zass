@@ -1,0 +1,43 @@
+@import '../../sass/zass';
+
+$zass-column-width: 60px;
+$zass-gutter-width: 20px;
+$zass-grid-units: 12;
+
+body {
+   color: white;
+   background-color: white;
+   text-align: center;
+}
+
+#wrapper div {
+   height: 600px;
+   div {
+      height: 400px;
+      div {
+	 height: 200px;
+      }
+   }
+}
+
+#wrapper {
+   @include zass-grid();
+   margin: auto;
+   overflow: hidden;
+   background-color: black;
+}
+
+#col1 {
+   @include zass-column(3);
+   background-color: #00c7ba;
+}
+
+#col2 {
+   @include zass-column(7);
+   background-color: #165d58;
+}
+
+#col3 {
+   @include zass-column(2);
+   background-color: #000051;
+}

@@ -1,0 +1,105 @@
+//Copyright 2011, Marc Busqué Pérez
+//
+//This file is a part of Zass.
+//
+//Zass is free software: you can redistribute it and/or modify
+//it under the terms of the GNU Lesser General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU Lesser General Public License for more details.
+//
+//You should have received a copy of the GNU Lesser General Public License
+//along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+//////////////////////////////////////////////////////////////////////////////
+//Contact: Marc Busqué Pérez - marc@lamarciana.com - http://www.lamarciana.com
+//////////////////////////////////////////////////////////////////////////////
+
+//@global int(px) grid columns width
+$zass-column-width: 60px !default;
+//@global int(px) grid gutters width
+$zass-gutter-width: 20px !default;
+//@global int number of grid units
+$zass-grid-units: 12 !default;
+
+//Set grid's pixels width as the maximum width. This way a perfect pixels photo of a design is achieved for resolutions greater or equal than grid's pixels width, while it's still 100% fluid for lower resolutions. If this maximum width is set in em units, then grid will increase its width if user increases text zoom level.
+//
+//@param bool $em whether to set the maximum width in font size relative units ('em') or not. Default to true.
+//@param int(px) $rfs relevant font size in pixels to calculate maximum width in 'em'. Default to 16px.
+@mixin zass-grid($em: true, $rfs: 16px) {
+   $max-width: _zass-grid-width();
+   @if ($em) {
+      $max-width: ($max-width / $rfs) * 1em;
+   }
+   max-width: $max-width;
+}
+
+//Rules to create a column.
+//
+//@param int $n number of grid units to spread.
+//@param int $parent-n number of grid units of its parent. Special value 0 means that its parent width is grid's itself or browser window's itself.
+//@param $position 'left', 'inner' or 'right' depending on column position. No needed if $parent-n is 0.
+//@param int $push number of grid units to be added to the left margin
+//@param int $pull number of grid units to be added to the right margin
+@mixin zass-column($n, $parent-n: 0, $position: 'inner',  $push: 0, $pull: 0) {
+   $cbw: false;
+   @if ($parent-n == 0) {
+      $cbw: _zass-grid-width();
+      $position: 'inner'; //If $parent-n is 0, each column is as an inner one (half a gutter margin in both sides)
+   } @else {
+      $cbw: ($parent-n * ($zass-column-width + $zass-gutter-width)) - $zass-gutter-width;
+   }
+   width: _zass-column-width($n, $cbw);
+   @if ($position == 'left') {
+      margin-left: _zass-column-margin($cbw, $push, true);
+   } @else if ($position == 'inner' or $position == 'right') {
+      margin-left: _zass-column-margin($cbw, $push, false);
+   }
+   @if ($position == 'right') {
+      margin-right: _zass-column-margin($cbw, $pull, true);
+   } @else if ($position == 'inner' or $position == 'left') {
+      margin-right: _zass-column-margin($cbw, $pull, false);
+   }
+   @include _zass-columnize();
+}
+
+//Returns grid width in pixels
+//
+//@return int(px) grid width in pixels
+@function _zass-grid-width() {
+   @return ($zass-column-width + $zass-gutter-width) * $zass-grid-units;
+}
+
+//Return width value in percentage
+//
+//@param int $n number of grid units to spread for the column.
+//@param int(px) $cbw containing block width in pixels, used to reference the percentage to calculate.
+//
+//@return int(%) width value in percentage
+@function _zass-column-width($n, $cbw) {
+   @return (((($zass-gutter-width + $zass-column-width) * $n) - $zass-gutter-width) / $cbw) * 100%;
+}
+
+//Return margin value in percentage
+//
+//@param int(px) $cbw containing block width in pixels, used to reference the percentage to calculate.
+//@param int $jump number of grid units to be pushed or pulled to the margin.
+//@param bool $extreme-side whether it's an extreme side column or not.
+//
+//@return % margin value in percentage
+@function _zass-column-margin($cbw, $jump, $extreme-side: false) {
+   $margin: $jump * ($zass-column-width + $zass-gutter-width);
+   @if ($extreme-side == false) {
+      $margin: $margin + (0.5 * $zass-gutter-width);
+   }
+   @return ($margin / $cbw) * 100%;
+}
+
+//Rules to make an element appears as a column
+@mixin _zass-columnize() {
+   float: left;
+}

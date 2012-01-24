@@ -1,0 +1,68 @@
+body {
+  color: white;
+  background-color: white;
+  text-align: center; }
+
+#wrapper div {
+  height: 600px; }
+  #wrapper div div {
+    height: 400px; }
+    #wrapper div div div {
+      height: 200px; }
+
+#wrapper {
+  max-width: 60em;
+  margin: auto;
+  overflow: hidden;
+  background-color: black; }
+
+#col1 {
+  width: 22.917%;
+  margin-left: 1.042%;
+  margin-right: 1.042%;
+  float: left;
+  background-color: #00c7ba; }
+
+#col2 {
+  width: 56.25%;
+  margin-left: 1.042%;
+  margin-right: 1.042%;
+  float: left;
+  background-color: #165d58; }
+  #col2 #col2-1 {
+    width: 40.741%;
+    margin-left: 0%;
+    margin-right: 1.852%;
+    float: left;
+    background-color: #f2aec3; }
+    #col2 #col2-1 #col2-1-1 {
+      width: 63.636%;
+      margin-left: 0%;
+      margin-right: 4.545%;
+      float: left;
+      background-color: #a1979a; }
+    #col2 #col2-1 #col2-1-2 {
+      width: 27.273%;
+      margin-left: 4.545%;
+      margin-right: 0%;
+      float: left;
+      background-color: #a00962; }
+  #col2 #col2-2 {
+    width: 25.926%;
+    margin-left: 1.852%;
+    margin-right: 1.852%;
+    float: left;
+    background-color: #e62f6f; }
+  #col2 #col2-3 {
+    width: 25.926%;
+    margin-left: 1.852%;
+    margin-right: 0%;
+    float: left;
+    background-color: #f6261c; }
+
+#col3 {
+  width: 14.583%;
+  margin-left: 1.042%;
+  margin-right: 1.042%;
+  float: left;
+  background-color: #000051; }

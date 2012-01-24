@@ -1,0 +1,55 @@
+@import '../../sass/zass';
+
+$zass-column-width: 60px;
+$zass-gutter-width: 20px;
+$zass-grid-units: 12;
+
+body {
+   color: white;
+   background-color: white;
+}
+
+#wrapper div {
+   height: 600px;
+   div {
+      height: 400px;
+      div {
+	 height: 200px;
+      }
+   }
+}
+
+#wrapper {
+   @include zass-grid();
+   margin: auto;
+   overflow: hidden;
+   background-color: black;
+}
+
+#col1 {
+   @include zass-column(3);
+   background-color: #00c7ba;
+   text-align: center;
+}
+
+#col2 {
+   @include zass-column(7);
+   background-color: #165d58;
+   #col2-1 {
+      @include zass-column(3, 7, 'left');
+      background-color: #f2aec3;
+   }
+   #col2-2 {
+      @include zass-column(2, 7, 'inner');
+      background-color: #e62f6f;
+   }
+   #col2-3 {
+      @include zass-column(2, 7, 'right');
+      background-color: #f6261c;
+   }
+}
+
+#col3 {
+   @include zass-column(2);
+   background-color: #000051;
+}
