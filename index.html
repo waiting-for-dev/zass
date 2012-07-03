@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Zass : Sass grid framework 100% fluid, semantic, clean and allowing infinte nesting level with the use of one single mixin." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Zass</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/laMarciana/zass">View on GitHub</a>
+
+          <h1 id="project_title">Zass</h1>
+          <h2 id="project_tagline">Sass grid framework 100% fluid, semantic, clean and allowing infinte nesting level with the use of one single mixin.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/laMarciana/zass/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/laMarciana/zass/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Zass</h1>
+
+<p><strong>One mixin to rule them all</strong></p>
+
+<p>Zass is a <a href="http://sass-lang.com/" title="Sass homepage">Sass</a> (CSS) fluid grid framework. Zass is 100% fluid, semantic, clean and allow infinite nesting of columns with the use of a single mixin.</p>
+
+<ul>
+<li>100% fluid because it only uses percentage units to create grid dimensions.</li>
+<li>Semantic, because thanks to Sass CSS pre-processor there is no need to pollute HTML with design named classes (as <code>.col_4</code> to indicate 4 grid units width).</li>
+<li>Clean because it does not use any CSS hack neither uggly negative margins. Zass does not care about obsolete browsers like Internet Explorer 6.</li>
+<li>Zass can nest infinite levels of columns.</li>
+<li>And, what is more awesome, Zass can do all of this using one single mixin.</li>
+</ul><h2>Setup</h2>
+
+<p>Zass framework requires you are working with <a href="http://sass-lang.com/" title="Sass homepage">Sass</a>.</p>
+
+<p>With git, to get latest stable version:</p>
+
+<pre><code>git clone https://github.com/laMarciana/zass.git
+</code></pre>
+
+<p>Otherwise, download it from:</p>
+
+<pre><code>https://github.com/laMarciana/zass/zipball/master
+</code></pre>
+
+<p>Move zass files to your sass directory and import <code>sass/_zass.scss</code> from your sass stylesheet:</p>
+
+<pre><code>@import 'sass/zass';
+</code></pre>
+
+<h2>How does it work?</h2>
+
+<p>First of all, you have to configure your grid through three variables. Here it is an example for a 960px grid:</p>
+
+<pre><code>$zass-column-width: 60px; //Grid columns width
+$zass-gutter-width: 20px; //Grid gutters width
+$zass-grid-units: 12; //Grid number of columns
+</code></pre>
+
+<p>Then, you are ready to start creating and nesting as many columns as you want using the <code>zass-column()</code> mixin:</p>
+
+<pre><code>zass-column($n, $parent-n, $position, $push, $pull);
+</code></pre>
+
+<p>Here it is an explanation of <code>zass-column</code> parameters:</p>
+
+<ul>
+<li>
+<code>$n</code>: amount of grid units that the column will take up.</li>
+<li>
+<code>$parent-n</code>: Only for nested columns, amount of grid units that the parent column takes up. 0 means it is not a nested column. <code>0</code> is the default.</li>
+<li>
+<code>$position</code>: Only for nested columns, it can be <code>left</code>, <code>right</code> or <code>inner</code> if a column is the left extreme one, the right extreme one or an inner one. <code>inner</code> by default.</li>
+<li>
+<code>$push</code>: Amount of grid units to push (left margin) the column</li>
+<li>
+<code>$pull</code>: Amount of grid units to pull (right margin) the column</li>
+</ul><p>So, let say you have following DOM structure:</p>
+
+<pre><code>&lt;div id="col1"&gt;
+  &lt;p&gt;Column 1&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;div id="col2"&gt;
+  &lt;div id="col2-1"&gt;
+    &lt;p&gt;Column 2-1&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id="col2-2"&gt;
+   &lt;p&gt;Column 2-2&lt;/p&gt;
+  &lt;/div&gt;
+ &lt;/div&gt;
+
+ &lt;div id="col3"&gt;
+   &lt;p&gt;Column 3&lt;/p&gt;
+ &lt;/div&gt;
+</code></pre>
+
+<p>With Zass, you could build quickly a grid layout:</p>
+
+<pre><code>@import '../../zass';
+
+$zass-column-width: 60px;
+$zass-gutter-width: 20px;
+$zass-grid-units: 12;
+
+#col1 {
+   @include zass-column(3); //Take up three grid units
+}
+
+#col2 {
+   @include zass-column(7); //Take up seven grid units
+   #col2-1 {
+      @include zass-column(4, 7, 'left'); //Take up 4 grid units inside #col2. It's the left one.
+   }
+   #col2-2 {
+      @include zass-column(3, 7, 'right'); //Take up 3 grid units inside #col2. It's the right one.
+   }
+}
+
+#col3 {
+   @include zass-column(1, $push: 1); //Take up one grid unit and push one more.
+}
+</code></pre>
+
+<p>Optionally, you can use a second mixin, <code>zass-grid()</code>, if you want to set grid width as the maximum width for a given container. That way, a perfect pixel photo of a design is achieved for resolutions greater or equal than grid pixel width while it is still 100% fluid for lower resolutions:</p>
+
+<pre><code>zass-grid($em, $rfs)
+</code></pre>
+
+<ul>
+<li>
+<code>$em</code>: If true, set that maximum width in em. In that case, the grid will increase its width if user increases text zoom level. Defaults to <code>true</code>.</li>
+<li>
+<code>$rfs</code>: Relevant font size to calculate maximum width in em units. Default to <code>16px</code>.</li>
+</ul><p>In our example:</p>
+
+<pre><code>#wrapper {
+  @include zass-grid(true, 16px); //It ouputs "max-width: 60em;" 
+}
+</code></pre>
+
+<p>or</p>
+
+<pre><code>#wrapper {
+  @include zass-grid(false); //Will ouput "max-width: 960px;"
+}
+</code></pre>
+
+<h2>More examples</h2>
+
+<p>Look at the <code>examples/</code> directory for more examples.</p>
+
+<h2>Reference</h2>
+
+<p>Variables, functions and mixins are fully documented in the source code.</p>
+
+<h2>Contact &amp; Copyright</h2>
+
+<p>Copyright 2012, Marc Busqué Pérez, under GNU LESSER GENERAL PUBLIC LICENSE
+<a href="mailto:marc@lamarciana.com">marc@lamarciana.com</a> - <a href="http://www.lamarciana.com">http://www.lamarciana.com</a></p>
+
+<hr><p>If you want more control with your grid layout, you can check <a href="http://lamarciana.github.com/fluidizer/">fluidizer</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Zass maintained by <a href="https://github.com/laMarciana">laMarciana</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-33127155-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
