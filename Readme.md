@@ -15,11 +15,11 @@ Zass framework requires you are working with [Sass](http://sass-lang.com/ "Sass 
 
 With git, to get latest stable version:
 
-    git clone https://github.com/laMarciana/zass.git
+    git clone https://github.com/waiting-for-dev/zass.git
 
 Otherwise, download it from:
 
-    https://github.com/laMarciana/zass/zipball/master
+    https://github.com/waiting-for-dev/zass/zipball/master
 
 Move zass files to your sass directory and import `sass/_zass.scss` from your sass stylesheet:
 
@@ -120,7 +120,3 @@ Variables, functions and mixins are fully documented in the source code.
 
 Copyright 2012, Marc Busqué Pérez, under GNU LESSER GENERAL PUBLIC LICENSE
 marc@lamarciana.com - http://www.lamarciana.com
-
-___
-
-If you want more control with your grid layout, you can check [fluidizer](http://lamarciana.github.com/fluidizer/)
